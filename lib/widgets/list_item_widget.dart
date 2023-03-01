@@ -67,7 +67,7 @@ class ListItemWidget extends StatelessWidget {
                                         text: player.pname ?? "",
                                         style: const TextStyle(
                                             color: Color(0xFFe89832),
-                                            fontSize: 16,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.normal),
                                         children: [
                                           TextSpan(
