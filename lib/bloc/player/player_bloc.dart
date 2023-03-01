@@ -39,9 +39,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerListState> {
           ),
         );
       }
-
       final players = await playerRepository.getPlayers(pageNo);
-
       players.isEmpty
           ? emit(state.copyWith(reachedMaxLimit: true))
           : emit(
@@ -52,6 +50,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerListState> {
               ),
             );
     } catch (e) {
+      pageNo = pageNo - 1;
       emit(state.copyWith(fetchingStatus: FetchingStatus.failure, players: []));
     }
   }

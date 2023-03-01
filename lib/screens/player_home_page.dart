@@ -114,17 +114,40 @@ class _PlayerListHomePageState extends State<PlayerListHomePage>
             builder: (context, state) {
               switch (state.fetchingStatus) {
                 case FetchingStatus.failure:
-                  return const Center(child: Text('failed to fetch posts'));
+                  return Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 16.0),
+                        child: Text(
+                          "Error in fetching data. Check your internet connection",
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.white //darkGreen
+                                )),
+                        onPressed: () =>
+                            context.read<PlayerBloc>().add(FetchEvent()),
+                        child: const Text(
+                          "Retry",
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                      )
+                    ],
+                  ));
                 case FetchingStatus.success:
                 case FetchingStatus.loading:
                   if (state.playerList.isEmpty) {
-                    return const Center(
-                        child: Text(
-                          "Error in fetching data",
-                          style:
-                          TextStyle(fontSize: 24, color: Colors.white, fontFamily: 'poppins'),
-                          textAlign: TextAlign.center,
-                        ));
+                    return getEmptyWidget();
                   }
                   return ListView.builder(
                     itemBuilder: (BuildContext context, int index) {
@@ -132,8 +155,8 @@ class _PlayerListHomePageState extends State<PlayerListHomePage>
                           ? state.reachedMaxLimit
                               ? Container()
                               : const Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child:  Center(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
                                     child: SizedBox(
                                       height: 24,
                                       width: 24,
@@ -142,8 +165,8 @@ class _PlayerListHomePageState extends State<PlayerListHomePage>
                                           color: Color(0xFF71b346)),
                                     ),
                                   ),
-                              )
-                          : ListItemtWidget(player: state.playerList[index]);
+                                )
+                          : ListItemWidget(player: state.playerList[index]);
                     },
                     itemCount: state.reachedMaxLimit
                         ? state.playerList.length
@@ -151,7 +174,9 @@ class _PlayerListHomePageState extends State<PlayerListHomePage>
                     controller: _scrollController,
                   );
                 case FetchingStatus.initial:
-                  return const Center(child: CircularProgressIndicator( color:  Color(0xFF71b346)));
+                  return const Center(
+                      child:
+                          CircularProgressIndicator(color: Color(0xFF71b346)));
               }
             },
           ),

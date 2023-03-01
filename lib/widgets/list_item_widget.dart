@@ -2,14 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../model/player_data_response.dart';
 
-class ListItemtWidget extends StatelessWidget {
-  late Player player;
+class ListItemWidget extends StatelessWidget {
+  final Player player;
 
-  ListItemtWidget({required this.player});
-
-  bool isConfirmation = false;
-
-  bool isLoaderShowing = false;
+  const ListItemWidget({super.key, required this.player});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +21,6 @@ class ListItemtWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  /*decoration: BoxDecoration(
-                    border: Border(
-                        right: BorderSide(
-                            color: Colors.grey.shade300, width: 2.0)),
-                    //color: Color.fromRGBO(230, 230, 230, 0.1),
-                  ),*/
                   width: MediaQuery.of(context).size.width * 0.20,
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -58,7 +48,6 @@ class ListItemtWidget extends StatelessWidget {
                                 color: Color(0xFF3c3c3c), width: 1.0)),
                         //color: Color.fromRGBO(230, 230, 230, 0.1),
                       ),
-
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.min,
@@ -82,16 +71,14 @@ class ListItemtWidget extends StatelessWidget {
                                             fontWeight: FontWeight.normal),
                                         children: [
                                           TextSpan(
-                                            text:
-                                                " ${player.position}",
+                                            text: " ${player.position}",
                                             style: const TextStyle(
                                                 color: Color(0xFF767676),
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.normal),
                                           )
                                         ]),
-                                  )
-                                  ,
+                                  ),
                                 ),
                               ),
                               const Text(
@@ -135,7 +122,8 @@ class ListItemtWidget extends StatelessWidget {
                                       Container(
                                         child: player.sourceLogo != null
                                             ? CachedNetworkImage(
-                                                imageUrl: player.sourceLogo ?? "",
+                                                imageUrl:
+                                                    player.sourceLogo ?? "",
                                                 memCacheWidth: 40,
                                                 memCacheHeight: 40,
                                               )
